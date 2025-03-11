@@ -111,10 +111,14 @@
             transform: translateY(-2px);
         }
 
+        .textarea-container {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
         textarea { 
             width: 100%; 
             height: 120px; 
-            margin-bottom: 1.5rem;
             padding: 1rem;
             border: 2px solid #e5e7eb;
             border-radius: 0.75rem;
@@ -225,6 +229,21 @@
         .message-section li {
             margin-bottom: 0.5rem;
         }
+
+        .secondary-button {
+            position: absolute;
+            bottom: 1rem;
+            right: 1rem;
+            background: var(--gray-light);
+            color: var(--gray);
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+        }
+
+        .secondary-button:hover {
+            background: var(--gray);
+            color: white;
+        }
     </style>
   </head>
   <body>
@@ -253,10 +272,13 @@
         </div>
 
         <div class="input-section">
-            <textarea 
-                id="input" 
-                placeholder="Plak hier je tekst..."
-            ></textarea>
+            <div class="textarea-container">
+                <textarea 
+                    id="input" 
+                    placeholder="Plak hier je tekst..."
+                ></textarea>
+                <button id="exampleBtn" class="secondary-button">Laad voorbeeld</button>
+            </div>
             
             <div class="controls">
                 <button id="prevBtn" disabled>← Vorige</button>
@@ -278,6 +300,7 @@
         const downloadBtn = document.getElementById('downloadBtn');
         const prevBtn = document.getElementById('prevBtn');
         const nextBtn = document.getElementById('nextBtn');
+        const exampleBtn = document.getElementById('exampleBtn');
         
         // Variables
         let mediaRecorder;
@@ -286,6 +309,23 @@
         let allWords = [];
         let currentIndex = 0;
         const WORDS_PER_CHUNK = 8;
+
+        // Example text
+        const exampleText = `Beste sollicitatiecommissie,
+
+Graag stel ik mijzelf voor als kandidaat voor deze functie. Ik ben enthousiast over de mogelijkheid om bij uw organisatie te werken. Met mijn ervaring en vaardigheden denk ik een waardevolle bijdrage te kunnen leveren.
+
+In mijn huidige rol heb ik geleerd om effectief samen te werken in teams en complexe projecten tot een goed einde te brengen. Ik ben communicatief sterk en werk graag in een dynamische omgeving.
+
+Ik kijk ernaar uit om in een persoonlijk gesprek meer te vertellen over mijn motivatie en ervaring.
+
+Met vriendelijke groet.`;
+
+        // Load example text
+        exampleBtn.onclick = () => {
+            input.value = exampleText;
+            input.dispatchEvent(new Event('input'));
+        };
 
         // Update prompt text when input changes
         input.oninput = () => {
