@@ -206,6 +206,48 @@
             padding: 2rem;
             border-radius: 1rem;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+
+        .message-section.collapsed {
+            padding: 1rem 2rem;
+        }
+
+        .message-section.collapsed .message-content {
+            display: none;
+        }
+
+        .message-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .message-section.collapsed .message-header {
+            margin-bottom: 0;
+        }
+
+        .close-button {
+            background: none;
+            border: none;
+            color: var(--gray);
+            padding: 0.5rem;
+            cursor: pointer;
+            font-size: 1.25rem;
+            line-height: 1;
+            transition: all 0.3s ease;
+        }
+
+        .close-button:hover {
+            color: var(--gray-dark);
+            transform: none;
+            background: none;
+        }
+
+        .message-content {
+            transition: all 0.3s ease;
         }
 
         .message-section h1 {
@@ -261,14 +303,19 @@
         </div>
 
         <div class="message-section">
-            <h1>Welkom bij De Spreekstoel</h1>
-            <p>Met deze app kun je professionele video-opnames maken voor je sollicitatie of presentatie. Zo werkt het:</p>
-            <ol>
-                <li>Plak je tekst in het tekstvak hieronder</li>
-                <li>Gebruik de pijltjestoetsen of knoppen om door je tekst te navigeren</li>
-                <li>Klik op 'Start Opname' wanneer je klaar bent om te beginnen</li>
-                <li>Na de opname kun je je video downloaden en delen</li>
-            </ol>
+            <div class="message-header">
+                <h1>Welkom bij De Spreekstoel</h1>
+                <button class="close-button" id="closeMessage">×</button>
+            </div>
+            <div class="message-content">
+                <p>Met deze app kun je professionele video-opnames maken voor je sollicitatie of presentatie. Zo werkt het:</p>
+                <ol>
+                    <li>Plak je tekst in het tekstvak hieronder</li>
+                    <li>Gebruik de pijltjestoetsen of knoppen om door je tekst te navigeren</li>
+                    <li>Klik op 'Start Opname' wanneer je klaar bent om te beginnen</li>
+                    <li>Na de opname kun je je video downloaden en delen</li>
+                </ol>
+            </div>
         </div>
 
         <div class="input-section">
@@ -301,6 +348,7 @@
         const prevBtn = document.getElementById('prevBtn');
         const nextBtn = document.getElementById('nextBtn');
         const exampleBtn = document.getElementById('exampleBtn');
+        const closeMessage = document.getElementById('closeMessage');
         
         // Variables
         let mediaRecorder;
@@ -311,15 +359,7 @@
         const WORDS_PER_CHUNK = 8;
 
         // Example text
-        const exampleText = `Beste sollicitatiecommissie,
-
-Graag stel ik mijzelf voor als kandidaat voor deze functie. Ik ben enthousiast over de mogelijkheid om bij uw organisatie te werken. Met mijn ervaring en vaardigheden denk ik een waardevolle bijdrage te kunnen leveren.
-
-In mijn huidige rol heb ik geleerd om effectief samen te werken in teams en complexe projecten tot een goed einde te brengen. Ik ben communicatief sterk en werk graag in een dynamische omgeving.
-
-Ik kijk ernaar uit om in een persoonlijk gesprek meer te vertellen over mijn motivatie en ervaring.
-
-Met vriendelijke groet.`;
+        const exampleText = `Stel je voor je wilt een videoboodschap opnemen waarbij je een tekst voorleest én in de camera kijkt tegelijk, precies daarvoor is deze applicatie gemaakt. Zorg dat je haar goed zit, je achtergrond opgeruimd is, plak je tekst hieronder en druk op de opname knop. Met de pijltjes van je toetsenbord kies je de snelheid waarmee de tekst wijzigd. De file wordt lokaal op je pc of mobiel opgeslagen en jij alleen kan 'm downloaden. Dat is nou "spreekstoel". Gebruik het voor een persoonlijke sollicitatie video, een pitch, of iets anders. Het is gratis, dus probeer eens!`;
 
         // Load example text
         exampleBtn.onclick = () => {
@@ -444,6 +484,20 @@ Met vriendelijke groet.`;
 
         // Start everything
         startCamera();
+
+        // Message section collapse/expand
+        closeMessage.onclick = () => {
+            const messageSection = document.querySelector('.message-section');
+            if (messageSection.classList.contains('collapsed')) {
+                messageSection.classList.remove('collapsed');
+                messageSection.style.padding = '2rem';
+                messageSection.querySelector('.message-content').style.display = 'block';
+            } else {
+                messageSection.classList.add('collapsed');
+                messageSection.style.padding = '1rem 2rem';
+                messageSection.querySelector('.message-content').style.display = 'none';
+            }
+        };
     </script>
   </body>
 </html> 
