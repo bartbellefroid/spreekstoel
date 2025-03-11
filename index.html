@@ -208,6 +208,16 @@
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease;
             overflow: hidden;
+            max-height: 500px;
+            opacity: 1;
+        }
+
+        .message-section.hidden {
+            max-height: 0;
+            opacity: 0;
+            padding: 0;
+            margin: 0;
+            pointer-events: none;
         }
 
         .message-section.collapsed {
@@ -304,7 +314,7 @@
 
         <div class="message-section">
             <div class="message-header">
-                <h1>Welkom bij De Spreekstoel</h1>
+                <h1>De Spreekstoel</h1>
                 <button class="close-button" id="closeMessage">×</button>
             </div>
             <div class="message-content">
@@ -485,18 +495,10 @@
         // Start everything
         startCamera();
 
-        // Message section collapse/expand
+        // Message section hide
         closeMessage.onclick = () => {
             const messageSection = document.querySelector('.message-section');
-            if (messageSection.classList.contains('collapsed')) {
-                messageSection.classList.remove('collapsed');
-                messageSection.style.padding = '2rem';
-                messageSection.querySelector('.message-content').style.display = 'block';
-            } else {
-                messageSection.classList.add('collapsed');
-                messageSection.style.padding = '1rem 2rem';
-                messageSection.querySelector('.message-content').style.display = 'none';
-            }
+            messageSection.classList.add('hidden');
         };
     </script>
   </body>
